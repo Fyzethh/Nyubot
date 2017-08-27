@@ -7,7 +7,7 @@ const fecthVideoInfo = require('youtube-info')
 const getYoutubeID = require('get-youtube-id')
 const config = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'))
 const prefix = config.prefix
-const yt_api_key = config.yt_api_key
+const YtApiKey = config.yt_api_key
 let queue = []
 let isPlaying = false
 
@@ -26,7 +26,7 @@ client.on('message', message => {
   const msg = message.content.toLowerCase()
   const args = message.content.split(' ').slice(1).join(' ')
   // music function
-  if (msg.startsWith(prefix + 'play')) {
+  if (msg.startsWith(`${prefix}play`)) {
     if (queue.length > 0 || isPlaying) {
       getID(args, id => {
         addToQueue(id)
@@ -51,11 +51,27 @@ client.on('message', message => {
   if (msg === 'ping') {
     message.reply('pong')
   }
+
+  // If the message is "!mi avatar"
+  if (message.content === `${prefix}mi avatar`) {
+  // Send the user's avatar URL
+    message.reply(message.author.avatarURL)
+  }
+  // delete messages of current channel example: "!delete msg 3"
+  if (msg.startsWith(`${prefix}delete msg `)) {
+    const limit = message.content.split(' ')
+    const validateINteger = /^\+?(0|[1-9]\d*)$/.test(limit[2])
+    if (validateINteger) {
+      message.channel.fetchMessages({limit: parseInt(limit[2])}).then(messages => message.channel.bulkDelete(messages))
+    } else {
+      message.reply('Debes ingresar un número de mensajes a eliminar')
+    }
+  }
 })
 
 function searchVideo (query, callback) {
   const q = encodeURIComponent(query)
-  const url = `https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=${q}&key=${yt_api_key}`
+  const url = `https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=${q}&key=${YtApiKey}`
   request(url, function (err, body) {
     const json = JSON.parse(body)
     callback(json.items[0].id.videoId)
