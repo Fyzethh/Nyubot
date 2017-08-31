@@ -53,8 +53,8 @@ client.on('message', message => {
   // Send the user's avatar URL
     message.reply(message.author.avatarURL)
   }
-  // delete messages of current channel example: "!delete msg 3"
-  if (msg.startsWith(`${prefix}clear msg `)) {
+  // delete messages of current channel example: "!clean msg 3"
+  if (msg.startsWith(`${prefix}clean msg `)) {
     const limit = message.content.split(' ')
     const validateINteger = /^\+?(0|[1-9]\d*)$/.test(limit[2])
     if (validateINteger) {
