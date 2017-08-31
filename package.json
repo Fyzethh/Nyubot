@@ -13,7 +13,8 @@
     "get-youtube-id": "^1.0.0",
     "opusscript": "0.0.3",
     "request": "^2.81.0",
-    "youtube-info": "^1.1.1"
+    "youtube-info": "^1.1.1",
+    "ytdl-core": "^0.17.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
