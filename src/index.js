@@ -15,7 +15,7 @@ let queueInfo = []
 let countQueue = 0
 let isPlaying = false
 
-client.login(config.token)
+client.login(config.discord_token)
 
 client.on('ready', () => {
   console.log('NyuBot is ready!')
@@ -24,7 +24,7 @@ client.on('ready', () => {
 client.on('message', message => {
   const msg = message.content.toLowerCase()
   const args = message.content.split(' ').slice(1).join(' ')
-  // music function
+  // comand for play music !play 'url video of youtube'
   if (msg.startsWith(`${prefix}play`)) {
     if (queue.length > 0 || isPlaying) {
       utils.getID(args, id => {
@@ -33,7 +33,7 @@ client.on('message', message => {
           if (err) throw new Error(err)
           countQueue++
           queueInfo.push(`${countQueue}-${videoInfo.title}`)
-          message.reply(`** ${videoInfo.title} ** agregado a la cola`)
+          message.reply(`** ${videoInfo.title} ** agregado a la cola !El 'bryan es un forever bronce'`)
         })
       })
     } else {
@@ -48,7 +48,7 @@ client.on('message', message => {
       })
     }
   }
-  // If the message is "!mi avatar"
+  // comand "!mi avatar"
   if (message.content === `${prefix}mi avatar`) {
   // Send the user's avatar URL
     message.reply(message.author.avatarURL)
