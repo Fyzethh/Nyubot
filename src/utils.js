@@ -1,34 +1,34 @@
 const fs = require('fs')
 const getYoutubeID = require('get-youtube-id')
 const request = require('request')
+
+const commands = require('./commands')
 const config = JSON.parse(fs.readFileSync('./settings.json', 'utf-8'))
 const YtApiKey = config.yt_api_key
 
-const searchVideo = (query, callback) => {
-  const q = encodeURIComponent(query)
-  const url = `https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=${q}&key=${YtApiKey}`
-  request(url, function (err, body) {
-    const json = JSON.parse(body)
-    callback(json.items[0].id.videoId)
-  })
+const  searchCommand = (command_name) => {
+	for(var i = 0; i < commands.length; i++) {
+		if(commands[i].command == command_name.toLowerCase()) {
+			return commands[i]
+		}
+	}
+	return false;
 }
 
-const getID = (str, callback) => {
-  if (isYoutube(str)) {
-    callback(getYoutubeID(str))
-  } else {
-    searchVideo(str, id => {
-      callback(id)
-    })
-  }
-}
-
-const isYoutube = str => {
-  return str.toLowerCase().indexOf('youtube.com') > -1
+const  handleCommand = (message, text) => {
+  let params = text.split(" ")
+	let command = searchCommand(params[0])
+	if(command) {
+		if(params.length - 1 < command.parameters.length) {
+			message.reply("Insufficient parameters!")
+		} else {
+      console.log(message)
+			command.execute(message, params)
+		}
+	}
 }
 
 module.exports = {
-  searchVideo: searchVideo,
-  getID: getID,
-  isYoutube: isYoutube
+  search_command: searchCommand,
+  handleCommand: handleCommand,
 }
