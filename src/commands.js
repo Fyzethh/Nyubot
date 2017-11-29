@@ -122,7 +122,7 @@ const commands = [
   }
   
   const addToQueue = strID => {
-    if (utils.isYoutube(strID)) {
+    if (isYoutube(strID)) {
       queue.push(getYoutubeID(strID))
     } else {
       queue.push(strID)

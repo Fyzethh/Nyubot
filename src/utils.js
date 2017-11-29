@@ -22,7 +22,6 @@ const  handleCommand = (message, text) => {
 		if(params.length - 1 < command.parameters.length) {
 			message.reply("Insufficient parameters!")
 		} else {
-      console.log(message)
 			command.execute(message, params)
 		}
 	}
