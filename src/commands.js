@@ -1,4 +1,3 @@
-
 const getYoutubeID = require('get-youtube-id')
 const fecthVideoInfo = require('youtube-info')
 const ytdl = require('ytdl-core')
@@ -42,6 +41,25 @@ const commands = [
           }
         }
     },
+
+    {
+      command: "pause",
+      description: "command pause for pause the current song'",
+      parameters: [],
+      execute: function(message, params) {       
+        if (isPlaying == true){
+          isPlaying = false
+          message.reply('se ha pausado la canción')
+          dispatcher.pause()
+        }else if (isPlaying == false){
+          isPlaying = true
+          message.reply('se ha reanudado la canción')
+          dispatcher.resume()
+        }else{
+          Message.reply('No hay canciones sonando')
+        }
+      }
+  },
     
     {
         command: "cola",
