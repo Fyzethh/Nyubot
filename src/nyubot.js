@@ -13,8 +13,8 @@ client.on('ready', () => {
 })
 
 client.on('message', message => {
-  let  message_text = message.content;
-  if(message_text[0] == prefix) { 
-    utils.handleCommand(message, message_text.substring(1));
+  let MessageText = message.content
+  if (MessageText[0] === prefix) {
+    utils.handleCommand(message, MessageText.substring(1))
   }
 })
